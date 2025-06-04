@@ -1,14 +1,13 @@
 import bisect
-
+import hashlib
 class HashRing:
     def __init__(self,virtual_nodes=3):
         self.ring = dict()
         self.sorted_keys = []
         self.nodes = set()
-        self.virtual_ndoes = virtual_nodes
-    def _hash(self,key):
-        import hashlib
-        return int(hashlib,sha1(key.encode()).hexdigest(),16)
+        self.virtual_nodes = virtual_nodes
+    def _hash(self,key):        
+        return int(hashlib.sha1(key.encode()).hexdigest(),16)
     def add_node(self,node):
         self.nodes.add(node)
         for i in range(self.virtual_nodes):
@@ -16,7 +15,7 @@ class HashRing:
             vnode_hash = self._hash(vnode_key)
             self.ring[vnode_hash] = node
             bisect.insort(self.sorted_keys,vnode_hash)
-    def remove_node(self.node):
+    def remove_node(self,node):
         self.nodes.discard(node)
         for i in range(self.virtual_nodes):
             vnode_key = f"{node.name}-vn{i}"
