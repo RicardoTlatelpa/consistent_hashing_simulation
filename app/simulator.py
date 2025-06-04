@@ -4,7 +4,7 @@ from app.key_store import KeyStore
 
 class Simulator:
     def __init__(self, num_nodes=3):
-        self.ring = Hashring()
+        self.ring = HashRing()
         self.nodes = [Node(f"Node-{i}") for i in range(num_nodes)]
         self.store = KeyStore(self.ring)
         for node in self.nodes:
